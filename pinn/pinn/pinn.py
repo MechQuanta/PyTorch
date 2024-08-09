@@ -111,10 +111,10 @@ print(X.shape)
 print(Y.shape)"""
 
 
-import numpy as np
+"""import numpy as np
 import matplotlib.pyplot as plt
-
-# Create 1D arrays
+"""
+"""# Create 1D arrays
 x = np.linspace(-3, 3, 100)  # 100 points between -3 and 3
 y = np.linspace(-3, 3, 100)
 
@@ -132,4 +132,17 @@ plt.colorbar()
 
 # Show the plot
 plt.show()
-
+"""
+x = np.array([[1],
+              [2],
+              [3],
+              [4],
+              [5],
+              [6],
+              [7],
+              [8],
+              [9],
+              [10]])
+y = np.reshape(x,(5,2))
+print("x = ",x)
+print("y = ",y)

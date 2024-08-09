@@ -4,6 +4,8 @@ import numpy as np
 import scipy.io
 from matplotlib import pyplot as plt
 import matplotlib.animation as animation
+import matplotlib
+matplotlib.use('TkAgg')
 
 nu = 0.01
 
@@ -149,13 +151,28 @@ y_test = torch.tensor(y_test,dtype=torch.float32,requires_grad=True).to(torch.de
 t_test = torch.tensor(t_test,dtype=torch.float32,requires_grad=True).to(torch.device("cuda"))
 
 
-u_out , v_out , p_out , f_out , g_out = pinn.function(x_test,y_test,t_test)
+"""u_out , v_out , p_out , f_out , g_out = pinn.function(x_test,y_test,t_test)
 u_plot = u_out.detach().cpu().numpy()
 u_plot = np.reshape(u_plot,(50,100))
+"""
 
-fig,ax = plt.subplots()
-
-plt.contourf(u_plot , level=30, cmap = 'jet')
+"""plt.contourf(u_plot , level=30, cmap = 'jet')
 plt.colorbar()
 plt.savefig("u_plot.png")
+plt.show()
+"""
+fig, ax = plt.subplots()
+
+def animate(i):
+    ax.clear()
+    u_out, v_out, p_out, f_out, g_out = pinn.function(x_test, y_test, i * t_test)
+    u_plot = u_out.detach().cpu().numpy()
+    u_plot = np.reshape(u_plot, (50, 100))
+    cax = ax.contourf(u_plot, levels=30, cmap='jet')
+    plt.xlabel(r'$x$')
+    plt.ylabel(r'$y$')
+    plt.title(r'$p(x, \; y, \; t)$')
+
+ani = animation.FuncAnimation(fig, animate, frames=30, interval=100, blit=False)
+ani.save('animation.mp4', writer='ffmpeg',dpi=300,fps=10)
 plt.show()
