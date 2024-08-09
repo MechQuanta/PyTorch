@@ -100,7 +100,7 @@ class NavierStokes():
 
 # Load data
 N_train = 5000
-data = scipy.io.loadmat("/home/sajid/PycharmProjects/PINN/pinn/cylinder_wake.mat")
+data = scipy.io.loadmat("/home/sajid/PycharmProjects/PINN/pinn/data/cylinder_wake.mat")
 U_star = data['U_star']
 X_star = data['X_star']
 p_star = data['p_star']
@@ -132,5 +132,6 @@ v_train = v[idx, :]
 
 # Initialize and train the model
 pinn = NavierStokes(x_train, y_train, t_train, u_train, v_train)
-pinn.train()
+#pinn.train()
+torch .save(pinn.net.state_dict(),"model.pt")
 
