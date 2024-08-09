@@ -106,6 +106,12 @@ X_star = data['X_star']
 p_star = data['p_star']
 t_star = data['t']
 
+x_test = X_star[:,0:1]
+y_test = X_star[:,1:2]
+t_test = np.ones((x_test.shape[0],x_test.shape[1]))
+u_test = U_star[:,0:1,0]
+v_test = U_star[:,1:2,1]
+
 # Extract velocity components
 u = U_star[:, 0:1, :]
 v = U_star[:, 1:2, :]
@@ -132,6 +138,24 @@ v_train = v[idx, :]
 
 # Initialize and train the model
 pinn = NavierStokes(x_train, y_train, t_train, u_train, v_train)
+"""
 #pinn.train()
-torch .save(pinn.net.state_dict(),"model.pt")
+torch .save(pinn.net.state_dict(),"model.pt")"""
+pinn.net.load_state_dict(torch.load("model.pt",weights_only=True))
+pinn.net.eval()
 
+x_test = torch.tensor(x_test,dtype=torch.float32,requires_grad=True).to(torch.device("cuda"))
+y_test = torch.tensor(y_test,dtype=torch.float32,requires_grad=True).to(torch.device("cuda"))
+t_test = torch.tensor(t_test,dtype=torch.float32,requires_grad=True).to(torch.device("cuda"))
+
+
+u_out , v_out , p_out , f_out , g_out = pinn.function(x_test,y_test,t_test)
+u_plot = u_out.detach().cpu().numpy()
+u_plot = np.reshape(u_plot,(50,100))
+
+fig,ax = plt.subplots()
+
+plt.contourf(u_plot , level=30, cmap = 'jet')
+plt.colorbar()
+plt.savefig("u_plot.png")
+plt.show()

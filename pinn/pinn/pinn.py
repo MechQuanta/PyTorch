@@ -2,6 +2,7 @@ import torch
 import scipy.io
 import tensorflow as tf
 import numpy as np
+import matplotlib.pyplot as plt
 """print(torch.cuda.is_available())
 print(tf.config.list_physical_devices('GPU'))
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
@@ -77,7 +78,58 @@ data = scipy.io.loadmat("./PINNs/Cylinder_wake/Cylinder_wake.mat")"""
 """x = np.array([[1,3],[2,4]])
 y = x.flatten()[:,None]
 print(y)"""
-print(torch.version.cuda)
+"""print(torch.version.cuda)
 print(torch.cuda.is_available())
 print("Current device : ", torch.cuda.current_device())
-print("Device name : ", torch.cuda.get_device_name(0))
+print("Device name : ", torch.cuda.get_device_name(0))"""
+"""x = np.ones((5000,1))
+print(x)"""
+
+
+
+"""# Create some example data
+x = np.linspace(-3, 3, 100)
+y = np.linspace(-3, 3, 100)
+X, Y = np.meshgrid(x, y)
+Z = np.sin(np.sqrt(X**2 + Y**2))
+
+# Create a filled contour plot
+plt.contourf(X, Y, Z, levels=30, cmap='jet')
+
+# Add a color bar to the plot
+plt.colorbar()
+
+plt.show()
+"""
+
+"""x = np.linspace(-3,3,100)
+y = np.linspace(-3,3,100)
+X,Y = np.meshgrid(x,y)
+print("X = ",X)
+print("Y = ",Y)
+print(X.shape)
+print(Y.shape)"""
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create 1D arrays
+x = np.linspace(-3, 3, 100)  # 100 points between -3 and 3
+y = np.linspace(-3, 3, 100)
+
+# Create 2D grid using meshgrid
+X, Y = np.meshgrid(x, y)
+
+# Evaluate a function over the grid
+Z = np.sin(np.sqrt(X**2 + Y**2))
+
+# Create a filled contour plot
+plt.contourf(X, Y, Z, levels=30, cmap='jet')
+
+# Add a color bar to indicate the scale
+plt.colorbar()
+
+# Show the plot
+plt.show()
+
